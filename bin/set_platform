@@ -1,0 +1,30 @@
+#!/bin/bash
+
+ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
+LIB_PATH=$ROOT_PATH/lib
+
+source $LIB_PATH/script_helper.sh
+
+
+get_platform(){
+  val=$@
+  echo -n $val | grep -Po '(win|osx|linux)'
+}
+
+get_architecture(){
+  val=$@
+  if [ -n "$( echo -n $val | grep -Po '(x64|amd64|64bit)' )" ]; then
+    echo -n x64
+  elif [ -n "$( echo -n $val | grep -Po '(x32|ia32|32bit)' )" ]; then
+    echo -n ia32
+  fi
+}
+
+USER_ARGS=$@
+ARCH=$( get_architecture $USER_ARGS )
+PLATFORM=$( get_platform $USER_ARGS )
+
+rm --force --verbose $RES_PATH/nwjs
+ln --symbolic --force --verbose $RES_PATH/pkg/nwjs-v*-$PLATFORM-$ARCH $RES_PATH/nwjs
+
+exit $EXITCODE_SUCCESS
