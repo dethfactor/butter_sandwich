@@ -1,0 +1,23 @@
+#!/bin/bash --login
+
+
+ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
+LIB_PATH=$ROOT_PATH/lib
+
+source $LIB_PATH/script_helper.sh
+
+$RES_PATH/pkg/populate
+
+
+cd $RES_PATH/pkg
+for archive in $( ls *.tar.gz *.zip ); do
+  if [ "$( is_tar $archive )" == 'true' ]; then
+    tar --extract --verbose --keep-old-files --keep-directory-symlink --no-overwrite-dir --file=./$archive
+  elif [ "$( is_zip $archive )" == 'true' ]; then
+    unzip -u -o $archive -d $RES_PATH/pkg/
+  fi
+done
+
+cd $USER_PATH
+touch $ROOT_PATH/.configured
+exit $EXITCODE_SUCCESS

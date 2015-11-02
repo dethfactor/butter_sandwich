@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ROOT_PATH=$( dirname $0 )
+USER_PATH=$( pwd )
+DATA_PATH=$ROOT_PATH/data
+
+NW_BIN=$ROOT_PATH/res/nwjs/nw
+$NW_BIN $DATA_PATH/$( basename $0 )-bin.nw

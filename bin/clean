@@ -1,0 +1,15 @@
+#!/bin/bash --login
+
+
+ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
+USER_PATH=$( pwd )
+
+RES_PATH=$ROOT_PATH/res
+TMP_PATH=$ROOT_PATH/tmp
+PKG_PATH=$RES_PATH/pkg
+
+rm --recursive --force $TMP_PATH
+rm --recursive --force $( ls --directory $PKG_PATH/*/ )
+
+rm --force $ROOT_PATH/.configured
+exit $EXITCODE_SUCCESS

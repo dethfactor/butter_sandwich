@@ -1,0 +1,21 @@
+#!/bin/bash --login
+
+
+ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
+LIB_PATH=$ROOT_PATH/lib
+ 
+source $LIB_PATH/script_helper.sh
+
+BUILD_ID="bin"
+TMP_PATH=$TMP_PATH/$BUILD_ID
+
+ENTRY_POINT=$( readlink --canonicalize $1 )
+OUTPUT_FILE=$TMP_PATH/$( basename $1 .html )-${BUILD_ID}.nw
+
+$BIN_PATH/build $ENTRY_POINT $USER_PATH $BUILD_ID
+
+$BIN_PATH/nw $OUTPUT_FILE
+EXITCODE=$?
+
+cd $USER_PATH
+exit $EXITCODE

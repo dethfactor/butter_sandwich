@@ -1,0 +1,54 @@
+#!/bin/bash --login
+
+
+ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
+LIB_PATH=$ROOT_PATH/lib
+ 
+source $LIB_PATH/script_helper.sh
+
+if [ ! -z $3 ]; then
+  BUILD_ID=$3
+else
+  BUILD_ID=$( build_id )
+fi
+
+
+TMP_PATH=$TMP_PATH/$BUILD_ID
+
+# make ourselves at home.
+rm --recursive --force $TMP_PATH
+mkdir --verbose --parent $TMP_PATH
+
+# argument one: our entry point, index.html
+INDEX_HTML=$( readlink --canonicalize $1 )
+
+# argument two: our project folder. defaults to current path
+if [ ! -z $2 ]; then
+  PROJECT_PATH=$( readlink --canonicalize $2 )
+else
+  PROJECT_PATH=$( dirname $INDEX_HTML )
+fi
+
+
+# output package is our input html with a .nw output.
+OUTPUT_PACKAGE_NAME=$TMP_PATH/$( basename $INDEX_HTML .html )-$BUILD_ID.nw
+
+
+# ===== BUILD
+
+  # copy projects, assets, etc. into our tmp folder.
+  #cp --recursive --verbose --dereference --force $RES_PATH/nwjs/* $TMP_PATH/
+  cp --recursive --verbose --dereference --force $INDEX_HTML $TMP_PATH/
+  cp --recursive --verbose --dereference --force $PROJECT_PATH/* $TMP_PATH/
+  if [ ! -f $TMP_PATH/package.json ]; then
+    cp --verbose --dereference $RES_PATH/build/default_package.json $TMP_PATH/package.json
+  fi
+
+# ===== PACKAGE IT!
+  cd $TMP_PATH
+  zip -9 -r -o -b $USER_PATH $OUTPUT_PACKAGE_NAME ./* 
+  #cp --recursive --verbose --force $OUTPUT_PACKAGE_NAME $USER_PATH
+
+# ===== SHIP IT!
+  cd $USER_PATH
+  exit $EXITCODE_SUCCESS
