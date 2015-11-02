@@ -1,0 +1,25 @@
+#!/bin/bash --login
+
+
+ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
+LIB_PATH=$ROOT_PATH/lib
+ 
+source $LIB_PATH/script_helper.sh
+
+INDEX_HTML=$( readlink --canonicalize $1 )
+PROJECT_NAME=$( basename $INDEX_HTML .html )
+
+
+
+if [ ! -r $TMP_PATH/../.${PROJECT_NAME}.recent_build ]; then
+  $BIN_PATH/build $INDEX_HTML $USER_PATH
+fi
+
+BUILD_ID=$( cat $TMP_PATH/.${PROJECT_NAME}.recent_build )
+OUTPUT_FILE=$TMP_PATH/$BUILD_ID/$PROJECT_NAME-${BUILD_ID}.nw
+
+$BIN_PATH/nw $OUTPUT_FILE
+EXITCODE=$?
+
+cd $USER_PATH
+exit $EXITCODE

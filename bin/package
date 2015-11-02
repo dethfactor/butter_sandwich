@@ -1,0 +1,47 @@
+#!/bin/bash --login
+
+
+ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
+LIB_PATH=$ROOT_PATH/lib
+ 
+source $LIB_PATH/script_helper.sh
+
+PACKAGE_ID=$( build_id )
+BUILD_ID='bin'
+TMP_PATH=$TMP_PATH/dist
+
+INDEX_HTML=$( readlink --canonicalize $1 )
+OUTPUT_BASE=$( basename $INDEX_HTML .html )
+OUTPUT_FILE=$( readlink --canonicalize $TMP_PATH/../$BUILD_ID/$OUTPUT_BASE-${BUILD_ID}.nw )
+
+# make ourselves at home.
+rm --recursive --force $TMP_PATH
+mkdir --verbose --parent $TMP_PATH
+
+cd $TMP_PATH
+
+# build and add a run script
+$BIN_PATH/build $INDEX_HTML $(dirname $INDEX_HTML) $BUILD_ID
+
+# drop in our payload.
+mkdir --verbose --parent $TMP_PATH/data
+mv --force --verbose $OUTPUT_FILE $TMP_PATH/data/
+
+# add some resources.
+mkdir $TMP_PATH/res
+cp --force --dereference --verbose --recursive $RES_PATH/nwjs $TMP_PATH/res/nwjs
+mkdir $TMP_PATH/lib
+cp --force --dereference --verbose --recursive $LIB_PATH/script_helper.sh $TMP_PATH/lib
+
+
+# toss in a run script.
+cp --dereference $RES_PATH/build/launcher $TMP_PATH/$OUTPUT_BASE
+
+
+# pack it up!
+OUTPUT_PACKAGE_NAME=$USER_PATH/${OUTPUT_BASE}.zip
+rm --force $OUTPUT_PACKAGE_NAME
+zip -9 -r -o -v -b $TMP_PATH $OUTPUT_PACKAGE_NAME *
+
+cd $USER_PATH
+exit $EXITCODE_SUCCESS
