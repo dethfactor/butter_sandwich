@@ -7,6 +7,8 @@
 
     alias butter_clean='<path_to_repo>/bin/clean'
 
+    alias butter_set_platform='<path_to_repo>/bin/set_platform'
+
     alias butter_build='<path_to_repo>/bin/build'
 
     alias butter_run='<path_to_repo>/bin/run'
@@ -34,12 +36,21 @@ or
    butter_package ./index.html
 ```
 <br/>
-:hamburger: clean up the repo (delete /tmp, extracted packages, etc.) 
+:hamburger: clean up the repo (delete /tmp, extracted packages, etc.)
 ```shell
    <path_to_repo>/bin/clean
 ```
 or
 ```shell
    butter_clean
+```
+<br/>
+:hamburger: set build architecure and platform
+```shell
+   <path_to_repo>/bin/set_platform <OS> <ARCHITECTURE>
+```
+or
+```shell
+   butter_set_platform <OS> <ARCHITECTURE>
 ```
 <br/><br/>
