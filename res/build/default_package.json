@@ -1,0 +1,16 @@
+{
+  "name": "butter sandwich",
+  "version": "0.0.1",
+  "main": "./index.html",
+  "window": {
+    "show": true,
+    "toolbar": false,
+    "frame": true,
+    "position": "center",
+    "width": 640,
+    "height": 360,
+    "min_width": 320,
+    "min_height": 180
+  }
+
+}

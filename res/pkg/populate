@@ -1,0 +1,19 @@
+#!/bin/bash
+ROOT_PATH=$( readlink --canonicalize $(dirname $0)/../.. )
+LIB_PATH=$ROOT_PATH/lib
+
+source $LIB_PATH/script_helper.sh
+source $CFG_PATH/resources.cfg
+
+get_package(){
+  pkg=$1
+  wget --no-clobber --verbose --tries=6 --continue --read-timeout=15 --waitretry=15 --no-dns-cache --directory-prefix=$RES_PATH/pkg $pkg
+}
+
+# our package list is defined in /cfg/resources.cfg
+PACKAGE_LIST=$THIRD_PARTY_RESOURCES
+
+
+for PACKAGE in $PACKAGE_LIST; do
+  get_package $PACKAGE
+done
