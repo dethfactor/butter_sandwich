@@ -18,6 +18,18 @@ for archive in $( ls *.tar.gz *.zip ); do
   fi
 done
 
-cd $USER_PATH
+
+if [ -f $CFG_PATH/.arch ]; then
+  ARCH=$( cat $CFG_PATH/.arch )
+fi
+if [ -f $CFG_PATH/.os ]; then
+  PLATFORM=$( cat $CFG_PATH/.os )
+fi
+
+$BIN_PATH/set_platform $PLATFORM $ARCH
+
+
 touch $ROOT_PATH/.configured
+
+cd $USER_PATH
 exit $EXITCODE_SUCCESS

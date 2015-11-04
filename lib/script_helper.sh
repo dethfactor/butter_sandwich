@@ -49,6 +49,36 @@ is_zip(){
   fi
 }
 
+system_os(){
+  if [ -n "$1" ]; then
+    os_str=$( to_lowercase $1 )
+  else
+    os_str=$( to_lowercase $(uname -s) )
+  fi
+
+  if [ -n "$( echo -n "$os_str" | grep -oP \(linux\|gnu\) )" ]; then
+    echo -n 'linux'
+  elif [ -n "$( echo -n "$os_str" | grep -oP \(\(win\)*nt\|win\(dows\|32\)*\) )" ]; then
+    echo -n 'win'
+  elif [ -n "$( echo -n "$os_str" | grep -oP \(darwin\|os\[\\s_-\]\{0,1\}x\|apple\|mac\) )" ]; then
+    echo -n 'osx'
+  fi
+}
+
+system_architecture(){
+  if [ -n "$1" ]; then
+    arch_str=$( to_lowercase $1 )
+  else
+    arch_str=$( to_lowercase $(uname -m) )
+  fi
+
+  if [ -n "$( echo -n $arch_str | grep -oP \(\(amd\|\(x\)\*86_\)*64\(bit\)\*\) )" ]; then
+    echo -n 'x64'
+  elif [ -n "$( echo -n $arch_str | grep -oP \(\[x\]*32\(x\|bit\)\|\[ix\]+\\d*86\) )" ]; then
+    echo -n 'ia32'
+ fi
+}
+
 
 
 build_id(){
