@@ -33,9 +33,14 @@ cp --force --dereference --verbose --recursive $RES_PATH/nwjs $TMP_PATH/res/nwjs
 mkdir $TMP_PATH/lib
 cp --force --dereference --verbose --recursive $LIB_PATH/script_helper.sh $TMP_PATH/lib
 
-
 # toss in a run script.
-cp --dereference $RES_PATH/build/launcher $TMP_PATH/$OUTPUT_BASE
+if [ -f $CFG_PATH/.os ]; then
+  PLATFORM=$( cat $CFG_PATH/.os )
+else
+  PLATFORM=$( system_os )
+fi
+cp --dereference $RES_PATH/build/${PLATFORM}_launcher $TMP_PATH/$OUTPUT_BASE
+
 
 
 # pack it up!
