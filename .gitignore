@@ -2,3 +2,6 @@
 /content
 /res/pkg/*
 .configured
+
+/cfg/.*
+/res/*
