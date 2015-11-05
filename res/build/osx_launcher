@@ -1,3 +1,13 @@
-#!/bin/bash --login
+#!/bin/bash
 
-# TODO: do something here.
+APP_NAME=$(basename $0)
+
+ROOT_PATH=$( dirname $0 )
+USER_PATH=$( pwd )
+DATA_PATH=$ROOT_PATH/data
+
+OPEN_BIN=$( which open )
+NW_BIN=$ROOT_PATH/res/nwjs/nwjs.app
+
+
+$OPEN_BIN -a --new --wait-apps $APP_NAME $NW_BIN $DATA_PATH/$APP_NAME-bin.nw
