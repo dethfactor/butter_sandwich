@@ -10,4 +10,4 @@ OPEN_BIN=$( which open )
 NW_BIN=$ROOT_PATH/res/nwjs/nwjs.app
 
 
-$OPEN_BIN -a --new --wait-apps $APP_NAME $NW_BIN $DATA_PATH/$APP_NAME-bin.nw
+$OPEN_BIN --new --wait-apps $NW_BIN $DATA_PATH/$APP_NAME-bin.nw
