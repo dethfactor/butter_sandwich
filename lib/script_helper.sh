@@ -51,7 +51,7 @@ is_zip(){
 
 system_os(){
   if [ -n "$1" ]; then
-    os_str=$( to_lowercase $1 )
+    os_str=$( to_lowercase $@ )
   else
     os_str=$( to_lowercase $(uname -s) )
   fi
@@ -67,7 +67,7 @@ system_os(){
 
 system_architecture(){
   if [ -n "$1" ]; then
-    arch_str=$( to_lowercase $1 )
+    arch_str=$( to_lowercase $@ )
   else
     arch_str=$( to_lowercase $(uname -m) )
   fi
