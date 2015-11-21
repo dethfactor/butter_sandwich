@@ -1,34 +1,17 @@
 # random helpers for shell scripts
 
-if [ -z $USER_PATH ]; then
-  USER_PATH=$( pwd )
-fi
-if [ -z $ROOT_PATH ]; then
-  ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
-fi
-
-LIB_PATH=$ROOT_PATH/lib
-RES_PATH=$ROOT_PATH/res
-BIN_PATH=$ROOT_PATH/bin
-CFG_PATH=$ROOT_PATH/cfg
-TMP_PATH=$ROOT_PATH/tmp
-
-EXITCODE_SUCCESS=0
-EXITCODE_FAILURE=255
-
-
-to_uppercase(){   # PRE: takes a string.
+to_uppercase(){   # returns a uppercase string.
   echo -n $@ | tr '[:lower:]' '[:upper:]'
-} # POST: returns an UPPERCASE version of the string.
+}
 
-to_lowercase(){   # PRE: takes a string.
+to_lowercase(){   # returns a lowercase string.
   echo -n $@ | tr '[:upper:]' '[:lower:]'
-} # POST: returns a LOWERCASE version of the string.
+}
 
-escape_string(){  # PRE: takes an unescaped string
+escape_string(){  # returns a "shell-quoted" string.
   str=$1
   printf "%q" $str
-} # POST: returns a 'shell-quoted' string.
+}
 
 is_tar(){
   filename=$1
@@ -96,6 +79,22 @@ abs_path(){
 build_id(){
   echo -n $( date --utc +%Y%m%d%H%M%S )
 }
+
+
+USER_PATH=$( pwd )
+ROOT_PATH=$( abs_path $(dirname $0)/.. )
+
+
+LIB_PATH=$ROOT_PATH/lib
+RES_PATH=$ROOT_PATH/res
+BIN_PATH=$ROOT_PATH/bin
+CFG_PATH=$ROOT_PATH/cfg
+TMP_PATH=$ROOT_PATH/tmp
+
+EXITCODE_SUCCESS=0
+EXITCODE_FAILURE=255
+
+
 
 load_configuration(){
   config_file=$CFG_PATH/${1}.cfg
