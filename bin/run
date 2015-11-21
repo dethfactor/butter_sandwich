@@ -1,12 +1,9 @@
 #!/bin/bash --login
 
-
-ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
-LIB_PATH=$ROOT_PATH/lib
- 
+LIB_PATH=$( dirname $0 )/../lib
 source $LIB_PATH/script_helper.sh
 
-INDEX_HTML=$( readlink --canonicalize $1 )
+INDEX_HTML=$( abs_path $1 )
 PROJECT_NAME=$( basename $INDEX_HTML .html )
 
 

@@ -1,9 +1,6 @@
 #!/bin/bash --login
 
-
-ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
-LIB_PATH=$ROOT_PATH/lib
- 
+LIB_PATH=$( dirname $0 )/../lib
 source $LIB_PATH/script_helper.sh
 
 if [ ! -z $3 ]; then
@@ -20,11 +17,11 @@ rm --recursive --force $TMP_PATH
 mkdir --verbose --parent $TMP_PATH
 
 # argument one: our entry point, index.html
-INDEX_HTML=$( readlink --canonicalize $1 )
+INDEX_HTML=$( abs_path $1 )
 
 # argument two: our project folder. defaults to current path
 if [ ! -z $2 ]; then
-  PROJECT_PATH=$( readlink --canonicalize $2 )
+  PROJECT_PATH=$( abs_path $2 )
 else
   PROJECT_PATH=$( dirname $INDEX_HTML )
 fi

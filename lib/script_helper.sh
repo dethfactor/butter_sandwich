@@ -79,7 +79,19 @@ system_architecture(){
  fi
 }
 
-
+abs_path(){
+  path=$1
+  if [ "$(system_os)" == 'osx' ]; then
+    # os x hack :(
+    user_path=$( pwd )
+    cd $( dirname $1 )
+    output=$( pwd )
+    cd $user_path
+    echo -e -n $output
+  elif [ "$(system_os)" == 'linux' ]; then
+    echo -e -n $( readlink --canonicalize $1 )
+  fi
+}
 
 build_id(){
   echo -n $( date --utc +%Y%m%d%H%M%S )
