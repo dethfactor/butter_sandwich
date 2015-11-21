@@ -84,6 +84,7 @@ build_id(){
 USER_PATH=$( pwd )
 ROOT_PATH=$( abs_path $(dirname $0)/.. )
 
+
 LIB_PATH=$ROOT_PATH/lib/sh
 RES_PATH=$ROOT_PATH/res
 BIN_PATH=$ROOT_PATH/bin
