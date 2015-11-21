@@ -1,8 +1,6 @@
 #!/bin/bash
 
-ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
-LIB_PATH=$ROOT_PATH/lib
-
+LIB_PATH=$( dirname $0 )/../lib/sh
 source $LIB_PATH/script_helper.sh
 
 USER_ARGS=$@

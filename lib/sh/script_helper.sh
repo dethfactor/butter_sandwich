@@ -80,16 +80,14 @@ build_id(){
   echo -n $( date --utc +%Y%m%d%H%M%S )
 }
 
+if [ -z "$USER_PATH" ]; then    USER_PATH=$( pwd );   fi
+if [ -z "$ROOT_PATH" ]; then    ROOT_PATH=$( abs_path $(dirname $0)/.. );   fi
 
-USER_PATH=$( pwd )
-ROOT_PATH=$( abs_path $(dirname $0)/.. )
-
-
-LIB_PATH=$ROOT_PATH/lib/sh
-RES_PATH=$ROOT_PATH/res
-BIN_PATH=$ROOT_PATH/bin
-CFG_PATH=$ROOT_PATH/cfg
-TMP_PATH=$ROOT_PATH/tmp
+if [ -z "$LIB_PATH" ]; then    LIB_PATH=$ROOT_PATH/lib/sh;    fi
+if [ -z "$RES_PATH" ]; then    RES_PATH=$ROOT_PATH/res;   fi
+if [ -z "$BIN_PATH" ]; then    BIN_PATH=$ROOT_PATH/bin;   fi
+if [ -z "$CFG_PATH" ]; then    CFG_PATH=$ROOT_PATH/cfg;   fi
+if [ -z "$TMP_PATH" ]; then    TMP_PATH=$ROOT_PATH/tmp;   fi
 
 EXITCODE_SUCCESS=0
 EXITCODE_FAILURE=255

@@ -1,18 +1,15 @@
 #!/bin/bash --login
 
-
-ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
-LIB_PATH=$ROOT_PATH/lib
- 
+LIB_PATH=$( dirname $0 )/../lib/sh
 source $LIB_PATH/script_helper.sh
 
 PACKAGE_ID=$( build_id )
 BUILD_ID='bin'
 TMP_PATH=$TMP_PATH/dist
 
-INDEX_HTML=$( readlink --canonicalize $1 )
+INDEX_HTML=$( abs_path $1 )
 OUTPUT_BASE=$( basename $INDEX_HTML .html )
-OUTPUT_FILE=$( readlink --canonicalize $TMP_PATH/../$BUILD_ID/$OUTPUT_BASE-${BUILD_ID}.nw )
+OUTPUT_FILE=$( abs_path $TMP_PATH/../$BUILD_ID/$OUTPUT_BASE-${BUILD_ID}.nw )
 
 # make ourselves at home.
 rm --recursive --force $TMP_PATH

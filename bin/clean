@@ -1,12 +1,8 @@
 #!/bin/bash --login
 
+LIB_PATH=$( dirname $0 )/../lib/sh
+source $LIB_PATH/script_helper.sh
 
-ROOT_PATH=$( readlink --canonicalize $(dirname $0)/.. )
-USER_PATH=$( pwd )
-
-RES_PATH=$ROOT_PATH/res
-TMP_PATH=$ROOT_PATH/tmp
-PKG_PATH=$RES_PATH/pkg
 
 rm --recursive --force $TMP_PATH
 rm --recursive --force $( ls --directory $PKG_PATH/*/ )
