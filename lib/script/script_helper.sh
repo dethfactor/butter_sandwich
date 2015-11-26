@@ -83,7 +83,7 @@ build_id(){
 if [ -z "$USER_PATH" ]; then    USER_PATH=$( pwd );   fi
 if [ -z "$ROOT_PATH" ]; then    ROOT_PATH=$( abs_path $(dirname $0)/.. );   fi
 
-if [ -z "$LIB_PATH" ]; then    LIB_PATH=$ROOT_PATH/lib/sh;    fi
+if [ -z "$LIB_PATH" ]; then    LIB_PATH=$ROOT_PATH/lib/script;    fi
 if [ -z "$RES_PATH" ]; then    RES_PATH=$ROOT_PATH/res;   fi
 if [ -z "$BIN_PATH" ]; then    BIN_PATH=$ROOT_PATH/bin;   fi
 if [ -z "$CFG_PATH" ]; then    CFG_PATH=$ROOT_PATH/cfg;   fi

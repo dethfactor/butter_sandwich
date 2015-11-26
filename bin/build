@@ -1,6 +1,6 @@
 #!/bin/bash --login
 
-LIB_PATH=$( dirname $0 )/../lib/sh
+LIB_PATH=$( dirname $0 )/../lib/script
 source $LIB_PATH/script_helper.sh
 
 if [ ! -z $3 ]; then
@@ -33,10 +33,20 @@ OUTPUT_PACKAGE_NAME=$TMP_PATH/$( basename $INDEX_HTML .html )-$BUILD_ID.nw
 
 # ===== BUILD
 
-  # copy projects, assets, etc. into our tmp folder.
+  # copy assets into build folder.
   #cp --recursive --verbose --dereference --force $RES_PATH/nwjs/* $TMP_PATH/
+
+  # copy user entry point into build folder.
   cp --recursive --verbose --dereference --force $INDEX_HTML $TMP_PATH/
+
+  # copy user project into build folder.
   cp --recursive --verbose --dereference --force $PROJECT_PATH/* $TMP_PATH/
+
+  # copy our libs, if any, into build folder.
+  if [ ! -d $TMP_PATH/lib/ ]; then    mkdir --verbose --parent $TMP_PATH/lib;   fi
+  cp --recursive --verbose --dereference --force $LIB_PATH/../* $TMP_PATH/lib/
+
+  # copy our package.json in if the user has none.
   if [ ! -f $TMP_PATH/package.json ]; then
     cp --verbose --dereference $RES_PATH/build/default_package.json $TMP_PATH/package.json
   fi

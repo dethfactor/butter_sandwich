@@ -1,6 +1,6 @@
 #!/bin/bash --login
 
-LIB_PATH=$( dirname $0 )/../lib/sh
+LIB_PATH=$( dirname $0 )/../lib/script
 source $LIB_PATH/script_helper.sh
 
 INDEX_HTML=$( abs_path $1 )

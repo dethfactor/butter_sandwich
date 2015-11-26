@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LIB_PATH=$( dirname $0 )/../lib/sh
+LIB_PATH=$( dirname $0 )/../lib/script
 source $LIB_PATH/script_helper.sh
 
 USER_ARGS=$@
