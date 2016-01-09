@@ -1,10 +1,13 @@
 {
-  "name": "butter sandwich",
+  "name": "development",
+  "description": "development",
   "version": "0.0.1",
-  "main": "./index.html",
+  "main": "./app_loader.html",
   "window": {
+    "icon": "./assets/favicon.gif",
+    "toolbar": true,
     "show": true,
-    "toolbar": false,
+    "title": "title",
     "frame": true,
     "position": "center",
     "width": 640,
