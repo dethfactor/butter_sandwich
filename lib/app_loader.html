@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <link href="styles/main.css" rel="stylesheet">
+
+    <script type='text/javascript' src="lib/engine/pixi.min.js"></script>
+    <script type='text/javascript' src="lib/engine/tools.js"></script>
+    <script type='text/javascript' src="lib/engine/request.js"></script>
+    <script type='text/javascript' src="lib/engine/transformation.js"></script>
+    <script type='text/javascript' src="lib/engine/sprite_transformations.js"></script>
+    <script type='text/javascript' src="lib/engine/asset_loader.js"></script>
+    <script type='text/javascript' src="lib/engine/element.js"></script>
+    <script type='text/javascript' src="lib/engine/scene.js"></script>
+
+    <script type='text/javascript' src="lib/engine/configuration.js"></script>
+    <script type='text/javascript' src="lib/engine/application.js"></script>
+
+    <script type='text/javascript'>
+      var Application = new ApplicationRuntime();
+      function initApplicationRuntime(){  // our javascript's entry point.
+        // append our renderer to our content view.
+        document.getElementById('content')
+          .appendChild(Application.renderer.view);
+
+        // load and execute user entry point.
+        loadScript( Application.configuration.argv[0], function(){
+          console.log("user script loaded!", currentTime() );
+        } );
+      }
+    </script>
+  </head>
+
+
+  <body onload='initApplicationRuntime();'>
+    <div id='content'>
+      <!-- our content! -->
+      <div id='close_button' alt='close button' title='close' onclick='Application.close();'></div>
+    </div>
+
+  </body>
+
+
+</html>
