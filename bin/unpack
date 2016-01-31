@@ -1,0 +1,44 @@
+#!/bin/bash
+
+ROOT_PATH=$( dirname $0 )/..
+USER_PATH=$( readlink --canonicalize $(pwd) )
+TMP_PATH=$ROOT_PATH/tmp
+RES_PATH=$ROOT_PATH/res
+PKG_PATH=$RES_PATH/pkg
+
+SRC_FILE=$1
+OUTPUT_PATH=$2
+
+
+is_tar(){
+  filename=$1
+  if [ "$( basename $filename .tar )" != "$( basename $filename )" ] ||
+     [ "$( basename $filename .tar.gz )" != "$( basename $filename )" ]; then
+    echo -n true
+  else
+    echo -n false
+  fi
+}
+
+is_zip(){
+  filename=$1
+  if [ "$( basename $filename .zip )" != "$( basename $filename )" ]; then
+    echo -n true
+  else
+    echo -n false
+  fi
+}
+
+
+echo "Entering $PKG_PATH"
+cd $PKG_PATH
+for archive in $( ls *.tar.gz *.zip ); do
+  if [ $( basename $archive .zip ) != $( basename $archive ) ]; then
+    $( which unzip ) -u -o $archive -d $PKG_PATH/
+  elif [ $( basename $archive .gz ) != $( basename $archive ) ] ||
+       [ $( basename $archive .tar.gz ) != $( basename $archive ) ]; then
+    $( which tar ) --extract --verbose --keep-old-files --keep-directory-symlink --no-overwrite-dir --file=./$archive
+  fi
+done
+echo "Leaving $PKG_PATH"
+cd $USER_PATH

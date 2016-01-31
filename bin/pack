@@ -1,0 +1,15 @@
+#!/bin/bash
+
+ROOT_PATH=$( dirname $0 )/..
+USER_PATH=$( readlink --canonicalize $(pwd) )
+TMP_PATH=$ROOT_PATH/tmp
+
+
+SRC_PATH=$1
+OUTPUT_PACKAGE=$2
+
+echo "Entering $SRC_PATH"
+cd $SRC_PATH
+$( which zip ) -9 -r -o -v -y -b $TMP_PATH $OUTPUT_PACKAGE *
+echo "Leaving $SRC_PATH"
+cd $USER_PATH
