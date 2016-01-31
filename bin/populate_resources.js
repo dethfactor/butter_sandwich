@@ -14,25 +14,26 @@ var packageURLs = [
 
 
 console.log( 'Populating Resources in ' + Script.resPath );
+Script.mkdirRecursive( Script.pkgPath );
+
 packageURLs.forEach( function(val,idx,ary){
   Script.getPackage( val, Script.pkgPath, function(){
     // asynchronously unpack our downloaded file.
     var filename = Script.pkgPath + '/' + path.basename(val);
     var unpackCmd = '$(which sh) ' + Script.binPath + '/unpack ' + filename + ' ' + Script.pkgPath
-    Script.executeShellCommand( unpackCmd );
+    Script.executeShellCommand( unpackCmd, function(err,stdout,stderr){
+      process.stdout.write( stdout );
+      var regex = RegExp( Script.getCurrentPlatformTag() + '|' + Script.getCurrentArchTag(), 'g' );
+      var valMatch = path.basename( val ).match( regex );
+      if( valMatch && valMatch.length == 2 ){
+        var targetPath = Script.pkgPath + '/' + path.basename(val).replace( /(.tar.gz)|(.zip)/, '');
+        Script.ln( targetPath + '/nw', Script.binPath + '/nw' );
+        Script.ln( targetPath + '/nwjc', Script.binPath + '/nwjc' );
+        return;
+      }
+    });
+
   });
-});
-
-
-packageURLs.forEach( function(val,idx,ary){
-  var regex = RegExp( Script.getCurrentPlatformTag() + '|' + Script.getCurrentArchTag(), 'g' );
-  var valMatch = path.basename( val ).match( regex );
-  if( valMatch && valMatch.length == 2 ){
-    var targetPath = Script.pkgPath + '/' + path.basename(val).replace( /(.tar.gz)|(.zip)/, '');
-    Script.ln( targetPath + '/nw', Script.binPath + '/nw' );
-    Script.ln( targetPath + '/nwjc', Script.binPath + '/nwjc' );
-    return;
-  }
 });
 
 
